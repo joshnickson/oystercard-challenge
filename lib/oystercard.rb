@@ -1,3 +1,5 @@
+require_relative 'station'
+
 class OysterCard
   attr_reader :balance
   attr_reader :entry_station
@@ -17,7 +19,7 @@ class OysterCard
 
   def touch_in(station)
     raise 'not enough money mate' if @balance < 1
-    @entry_station = station
+    @entry_station = station.name
   end
 
   def touch_out
@@ -25,9 +27,6 @@ class OysterCard
     @entry_station = nil
   end
 
-  def in_journey?
-    @entry_station != nil
-  end
 
 #  private
 

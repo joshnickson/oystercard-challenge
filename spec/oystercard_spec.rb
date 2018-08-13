@@ -2,7 +2,7 @@ require './lib/oystercard.rb'
 
 describe OysterCard do
   let(:card) { OysterCard.new }
-  let(:station) { 'Aldgate' }
+  let(:station) { Station.new('Aldgate', 1) }
 
   it 'new card has balance of zero' do
     expect(card.balance).to eq 0
@@ -25,16 +25,11 @@ describe OysterCard do
 
     it 'touches in' do
       card.top_up(50)
-      expect(card.touch_in(station)).to eq station
+      expect(card.touch_in(station)).to eq station.name
     end
 
   end
 
-  it 'tells you when in journey' do
-    card.top_up(50)
-    card.touch_in(station)
-    expect(card).to be_in_journey
-  end
 
   # it 'touches out' do
   #   expect(card.touch_out).to change(card.balance)
