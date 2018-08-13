@@ -21,16 +21,22 @@ describe OysterCard do
   end
 
   it 'touches in' do
+    card.top_up(50)
     expect(card.touch_in).to eq true
   end
 
   it 'tells you when in journey' do
+    card.top_up(50)
     card.touch_in
-    expect(card.in_journey?).to eq true
+    expect(card).to be_in_journey
   end
 
   it 'touches out' do
     expect(card.touch_out).to eq false
+  end
+
+  it 'raises error if touch in amount is less than 1' do
+    expect { card.touch_in }.to raise_error 'not enough money mate'
   end
 
 end
