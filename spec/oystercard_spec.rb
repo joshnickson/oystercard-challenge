@@ -39,4 +39,10 @@ describe OysterCard do
     expect { card.touch_in }.to raise_error 'not enough money mate'
   end
 
+  it 'deducts the cost of the journey' do
+    card.top_up(10)
+    card.touch_in
+    card.touch_out
+    expect(card.balance).to eq 9
+  end
 end
