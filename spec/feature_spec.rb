@@ -2,4 +2,5 @@
 #
 # card = OysterCard.new
 # card.top_up(80)
-# card.deduct(5)
+#
+# card.touch_in

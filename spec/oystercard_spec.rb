@@ -19,4 +19,8 @@ describe OysterCard do
     card.top_up(80)
     expect(card.deduct(5)).to eq 75
   end
+
+  it 'touches in' do
+    expect(card.touch_in).to eq nil
+  end
 end
