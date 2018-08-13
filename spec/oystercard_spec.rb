@@ -2,6 +2,7 @@ require './lib/oystercard.rb'
 
 describe OysterCard do
   let(:card) { OysterCard.new }
+  let(:station) { 'Aldgate' }
 
   it 'new card has balance of zero' do
     expect(card.balance).to eq 0
@@ -17,32 +18,32 @@ describe OysterCard do
 
   it 'deducts an amount' do
     card.top_up(80)
-    expect(card.deduct(5)).to eq 75
+    expect(card.send(:deduct, 5)).to eq 75
   end
 
-  it 'touches in' do
-    card.top_up(50)
-    expect(card.touch_in).to eq true
+  describe '#touch_in' do
+
+    it 'touches in' do
+      card.top_up(50)
+      expect(card.touch_in(station)).to eq station
+    end
+
   end
 
   it 'tells you when in journey' do
     card.top_up(50)
-    card.touch_in
+    card.touch_in(station)
     expect(card).to be_in_journey
   end
-
-  it 'touches out' do
-    expect(card.touch_out).to eq false
-  end
+  # it 'touches out' do
+  #   expect(card.touch_out).to eq false
+  # end
 
   it 'raises error if touch in amount is less than 1' do
-    expect { card.touch_in }.to raise_error 'not enough money mate'
+    expect { card.touch_in(station) }.to raise_error 'not enough money mate'
   end
 
   it 'deducts the cost of the journey' do
-    card.top_up(10)
-    card.touch_in
-    card.touch_out
-    expect(card.balance).to eq 9
+    expect { card.touch_out }.to change { card.balance}.by(-1)
   end
 end
