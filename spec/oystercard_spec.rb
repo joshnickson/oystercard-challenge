@@ -21,6 +21,16 @@ describe OysterCard do
   end
 
   it 'touches in' do
-    expect(card.touch_in).to eq nil
+    expect(card.touch_in).to eq true
   end
+
+  it 'tells you when in journey' do
+    card.touch_in
+    expect(card.in_journey?).to eq true
+  end
+
+  it 'touches out' do
+    expect(card.touch_out).to eq false
+  end
+
 end
