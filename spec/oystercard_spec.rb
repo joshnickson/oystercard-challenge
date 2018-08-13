@@ -30,7 +30,6 @@ describe OysterCard do
 
   end
 
-
   # it 'touches out' do
   #   expect(card.touch_out).to change(card.balance)
   # end
@@ -41,6 +40,6 @@ describe OysterCard do
 
   it 'deducts the cost of the journey' do
   #  allow(subject).to receive(:deduct) { -1 }
-    expect { card.touch_out }.to change { card.balance }.by(-1)
+    expect { card.touch_out(station) }.to change { card.balance }.by(-1)
   end
 end

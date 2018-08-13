@@ -22,9 +22,10 @@ class OysterCard
     @entry_station = station.name
   end
 
-  def touch_out
+  def touch_out(station)
     self.deduct
     @entry_station = nil
+    @exit_station = station.name
   end
 
 
