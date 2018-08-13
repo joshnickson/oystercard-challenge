@@ -35,8 +35,9 @@ describe OysterCard do
     card.touch_in(station)
     expect(card).to be_in_journey
   end
+
   # it 'touches out' do
-  #   expect(card.touch_out).to eq false
+  #   expect(card.touch_out).to change(card.balance)
   # end
 
   it 'raises error if touch in amount is less than 1' do
@@ -44,6 +45,7 @@ describe OysterCard do
   end
 
   it 'deducts the cost of the journey' do
-    expect { card.touch_out }.to change { card.balance}.by(-1)
+  #  allow(subject).to receive(:deduct) { -1 }
+    expect { card.touch_out }.to change { card.balance }.by(-1)
   end
 end

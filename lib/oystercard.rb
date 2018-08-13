@@ -29,7 +29,7 @@ class OysterCard
     @entry_station != nil
   end
 
-  # private
+#  private
 
   def deduct(amount = JOURNEY_COST)
     @balance -= amount
