@@ -26,13 +26,12 @@ class OysterCard
 
   def touch_out(station)
     # something unless in_journey?
-    self.deduct
+    deduct
     @entry_station = nil
     @exit_station = station.name
   end
 
-
-#  private
+  private
 
   def deduct(amount = JOURNEY_COST)
     @balance -= amount

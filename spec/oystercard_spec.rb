@@ -30,16 +30,12 @@ describe OysterCard do
 
   end
 
-  # it 'touches out' do
-  #   expect(card.touch_out).to change(card.balance)
-  # end
+  it 'touches out and deducts the cost of the journey' do
+    expect{card.touch_out(station)}.to change{card.balance}.by(-1)
+  end
 
   it 'raises error if touch in amount is less than 1' do
     expect { card.touch_in(station) }.to raise_error 'not enough money mate'
   end
 
-  it 'deducts the cost of the journey' do
-  #  allow(subject).to receive(:deduct) { -1 }
-    expect { card.touch_out(station) }.to change { card.balance }.by(-1)
-  end
 end
