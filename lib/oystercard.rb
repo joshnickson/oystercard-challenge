@@ -1,15 +1,13 @@
 require_relative 'station'
 
 class OysterCard
-  attr_reader :balance
-  attr_reader :entry_station
-  attr_reader :exit_station
+  attr_reader :balance, :entry_station, :exit_station, :journey_log
 
   MAX_AMOUNT = 90
-  JOURNEY_COST = 1
 
   def initialize
     @balance = 0
+    @journey_log = []
   end
 
   def top_up(amount)
@@ -19,22 +17,38 @@ class OysterCard
   end
 
   def touch_in(station)
-    # something if in_journey?
     raise 'not enough money mate' if @balance < 1
+    if Journey.new(self).in_journey?
+      penalty
+      complete_journey
+    end
     @entry_station = station.name
   end
 
   def touch_out(station)
-    # something unless in_journey?
-    deduct
-    @entry_station = nil
+    penalty unless Journey.new(self).in_journey?
     @exit_station = station.name
+    complete_journey
+  end
+
+  def complete_journey
+    deduct(@penalty)
+    @journey_log << [@entry_station, @exit_station]
+    @entry_station = nil
+    @exit_station = nil
+    @penalty = false
+  end
+
+  def penalty
+    @penalty
   end
 
   private
 
-  def deduct(amount = JOURNEY_COST)
-    @balance -= amount
+  def deduct(penalty)
+    @balance -= Journey::JOURNEY_COST
+    @balance -= 6 if penalty
+    @balance
   end
 
 end

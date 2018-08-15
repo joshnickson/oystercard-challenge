@@ -2,7 +2,8 @@ require './lib/oystercard.rb'
 
 describe OysterCard do
   let(:card) { OysterCard.new }
-  let(:station) { Station.new('Aldgate', 1) }
+  let(:aldgate) { Station.new('Aldgate', 1) }
+  let(:monument) { Station.new('Monument', 1) }
 
   it 'new card has balance of zero' do
     expect(card.balance).to eq 0
@@ -18,24 +19,41 @@ describe OysterCard do
 
   it 'deducts an amount' do
     card.top_up(80)
-    expect(card.send(:deduct, 5)).to eq 75
+    expect(card.send(:deduct, false)).to eq 79
   end
 
   describe '#touch_in' do
 
     it 'touches in' do
       card.top_up(50)
-      expect(card.touch_in(station)).to eq station.name
+      expect(card.touch_in(aldgate)).to eq aldgate.name
     end
 
   end
 
   it 'touches out and deducts the cost of the journey' do
-    expect{card.touch_out(station)}.to change{card.balance}.by(-1)
+    card.top_up(50)
+    card.touch_in(monument)
+    expect{card.touch_out(aldgate)}.to change{card.balance}.by(-1)
   end
 
   it 'raises error if touch in amount is less than 1' do
-    expect { card.touch_in(station) }.to raise_error 'not enough money mate'
+    expect { card.touch_in(aldgate) }.to raise_error 'not enough money mate'
+  end
+
+  it 'gives you a list of journey history' do
+    card.top_up(50)
+
+    card.touch_in(aldgate)
+    card.touch_out(monument)
+
+    card.touch_in(monument)
+
+    card.touch_in(monument)
+    card.touch_out(aldgate)
+
+    expect(card.journey_log.flatten.join', ').to eq 'Aldgate, Monument, Monument, , Monument, Aldgate'
+
   end
 
 end

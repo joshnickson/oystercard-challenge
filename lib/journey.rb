@@ -1,5 +1,7 @@
 class Journey
 
+  JOURNEY_COST = 1
+
   def initialize(oystercard)
     @oystercard = oystercard
   end

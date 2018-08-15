@@ -14,7 +14,7 @@ describe Journey do
   end
 
   it 'returns minimum fare' do
-      expect(commute.fare).to eq 1
+    expect(commute.fare).to eq 1
   end
 
 end
